@@ -119,27 +119,37 @@ const HrInterviewPage = () => {
       }
       setCameraActive(false);
     } else {
+      if (!navigator?.mediaDevices?.getUserMedia) {
+        addToast("Webcam requires HTTPS or a modern browser environment.", "error");
+        return;
+      }
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 320, height: 240 },
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
           audio: false,
         });
         streamRef.current = stream;
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
         setCameraActive(true);
         addToast("Webcam preview active. Maintain confident posture & eye contact!", "success");
       } catch (err) {
-        addToast("Unable to access webcam. Check browser camera permissions.", "error");
+        if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+          addToast("Camera permission was denied. Please allow camera access in your browser address bar.", "error");
+        } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
+          addToast("No camera detected on this system.", "info");
+        } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
+          addToast("Camera is currently in use by another app or browser tab.", "error");
+        } else {
+          addToast(`Camera access: ${err.message || "Unable to start webcam"}`, "error");
+        }
       }
     }
   };
 
-  // Re-attach video stream if camera is active
+  // Attach video stream whenever camera is active
   useEffect(() => {
     if (cameraActive && streamRef.current && videoRef.current) {
       videoRef.current.srcObject = streamRef.current;
+      videoRef.current.play().catch(() => {});
     }
   }, [cameraActive]);
 
@@ -391,7 +401,13 @@ const HrInterviewPage = () => {
         <GlassCard className="p-3 bg-slate-950/80 border-indigo-500/30 flex items-center justify-center">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black aspect-video max-h-48">
             <video
-              ref={videoRef}
+              ref={(el) => {
+                videoRef.current = el;
+                if (el && streamRef.current && el.srcObject !== streamRef.current) {
+                  el.srcObject = streamRef.current;
+                  el.play().catch(() => {});
+                }
+              }}
               autoPlay
               playsInline
               muted

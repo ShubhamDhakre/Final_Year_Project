@@ -181,7 +181,7 @@ const DashboardPage = () => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
             {resumeData?.analysis ? (
-              <div className="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-left">
+              <div className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left">
                 <div className="text-[10px] uppercase tracking-wider text-slate-400">
                   Latest Match ({resumeData.analysis.role})
                 </div>
@@ -277,7 +277,7 @@ const DashboardPage = () => {
                 .map((h) => (
                   <div
                     key={h.id}
-                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/5 border border-white/5"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] transition"
                   >
                     <div className="flex flex-col">
                       <span className="text-xs font-medium text-slate-100">

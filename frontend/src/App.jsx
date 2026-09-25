@@ -9,6 +9,7 @@ import HrInterviewPage from "./pages/HrInterviewPage";
 import TechnicalInterviewPage from "./pages/TechnicalInterviewPage";
 import ResumeAnalysisPage from "./pages/ResumeAnalysisPage";
 import LoadingScreen from "./components/LoadingScreen";
+import CursorGlow from "./components/CursorGlow";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -20,26 +21,29 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+    <>
+      <CursorGlow />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <DashboardLayout />
-          </PrivateRoute>
-        }
-      >
-        <Route index element={<DashboardPage />} />
-        <Route path="resume-analyzer" element={<ResumeAnalysisPage />} />
-        <Route path="hr-interview" element={<HrInterviewPage />} />
-        <Route path="technical-interview" element={<TechnicalInterviewPage />} />
-      </Route>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="resume-analyzer" element={<ResumeAnalysisPage />} />
+          <Route path="hr-interview" element={<HrInterviewPage />} />
+          <Route path="technical-interview" element={<TechnicalInterviewPage />} />
+        </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 };
 

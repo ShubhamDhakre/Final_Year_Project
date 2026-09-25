@@ -20,7 +20,7 @@ export const ToastProvider = ({ children }) => {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`px-4 py-2 rounded-xl text-sm shadow-glow border border-white/10 bg-white/10 backdrop-blur-lg ${
+            className={`px-4 py-2 rounded-xl text-sm shadow-soft border border-white/10 bg-white/10 backdrop-blur-lg ${
               toast.type === "error" ? "text-red-300" : "text-emerald-300"
             }`}
           >

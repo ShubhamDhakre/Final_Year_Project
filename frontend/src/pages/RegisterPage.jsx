@@ -45,13 +45,19 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4">
-      <GlassCard className="w-full max-w-md p-8 space-y-6">
+    <div className="relative min-h-screen flex items-center justify-center bg-[#070B14] px-4 overflow-hidden">
+      {/* Ambient background glow spheres */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute -top-32 -left-32 w-[550px] h-[550px] bg-indigo-500/20 rounded-full blur-[140px]" />
+        <div className="absolute -bottom-20 -right-20 w-[550px] h-[550px] bg-purple-500/20 rounded-full blur-[140px]" />
+        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-blue-500/12 rounded-full blur-[150px]" />
+      </div>
+      <GlassCard className="relative z-10 w-full max-w-md p-8 space-y-6">
         <div className="flex flex-col items-center gap-2">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-glow flex items-center justify-center text-lg font-bold"
+            className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 shadow-soft flex items-center justify-center text-lg font-bold"
           >
             AI
           </motion.div>

@@ -47,7 +47,7 @@ const Chatbot = () => {
     <>
       {/* Floating button */}
       <motion.button
-        className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-fuchsia-500 shadow-glow flex items-center justify-center text-white"
+        className="fixed bottom-6 right-6 z-40 h-14 w-14 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-fuchsia-500 shadow-realistic flex items-center justify-center text-white"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.96 }}
         onClick={() => setOpen((o) => !o)}
@@ -61,10 +61,10 @@ const Chatbot = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            className="fixed bottom-24 right-6 z-40 w-[360px] max-w-[90vw] rounded-2xl bg-slate-900/95 border border-white/10 shadow-glow backdrop-blur-xl flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-6 z-40 w-[360px] max-w-[90vw] rounded-2xl bg-slate-900/85 border border-white/[0.08] shadow-glass backdrop-blur-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-gradient-to-r from-slate-900/80 to-slate-800/80">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-xs font-bold">
                   AI
@@ -88,13 +88,13 @@ const Chatbot = () => {
             </div>
 
             {/* Suggested questions */}
-            <div className="px-3 py-2 border-b border-white/10 overflow-x-auto">
+            <div className="px-3 py-2 border-b border-white/[0.08] overflow-x-auto">
               <div className="flex gap-2 pb-1">
                 {SUGGESTED.map((q) => (
                   <button
                     key={q}
                     onClick={() => sendMessage(q)}
-                    className="whitespace-nowrap text-[11px] px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-100 border border-white/10"
+                    className="whitespace-nowrap text-[11px] px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-100 border border-white/[0.08]"
                   >
                     {q}
                   </button>
@@ -142,10 +142,10 @@ const Chatbot = () => {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="p-3 border-t border-white/10">
+            <form onSubmit={handleSubmit} className="p-3 border-t border-white/[0.08]">
               <div className="flex items-center gap-2">
                 <input
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-indigo-500/70"
+                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-indigo-400/50"
                   placeholder="Ask about interviews, resumes, or tips..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -153,7 +153,7 @@ const Chatbot = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="h-9 px-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-xs font-medium text-white shadow-glow disabled:opacity-60"
+                  className="h-9 px-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-xs font-medium text-white shadow-soft disabled:opacity-60"
                 >
                   Send
                 </button>

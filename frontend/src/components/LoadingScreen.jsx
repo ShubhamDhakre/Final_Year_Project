@@ -7,7 +7,7 @@ const LoadingScreen = () => {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-glow flex items-center gap-3"
+        className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-glass flex items-center gap-3"
       >
         <div className="h-9 w-9 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold">
           AI

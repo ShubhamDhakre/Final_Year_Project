@@ -223,7 +223,7 @@ const HrInterviewPage = () => {
                 onClick={() => setDifficulty(d.id)}
                 className={`px-3 py-1.5 rounded-full text-xs border transition ${
                   difficulty === d.id
-                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-transparent shadow-glow"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-transparent shadow-soft"
                     : "bg-white/5 border-white/10 text-slate-200 hover:bg-white/10"
                 }`}
               >

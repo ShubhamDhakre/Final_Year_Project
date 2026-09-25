@@ -7,9 +7,37 @@
 }
 
 body {
-  @apply bg-background text-slate-50 antialiased;
+  background-color: #070B14;
+  background-image: 
+    radial-gradient(circle 800px at 15% 10%, rgba(99, 102, 241, 0.22) 0%, transparent 60%),
+    radial-gradient(circle 750px at 85% 15%, rgba(168, 85, 247, 0.20) 0%, transparent 55%),
+    radial-gradient(circle 900px at 50% 75%, rgba(59, 130, 246, 0.16) 0%, transparent 60%),
+    radial-gradient(circle 700px at 85% 90%, rgba(217, 70, 239, 0.18) 0%, transparent 55%);
+  background-attachment: fixed;
+  color: #F8FAFC;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  @apply min-h-screen;
+  min-height: 100vh;
+}
+
+/* Sleek minimalist glass scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
 }

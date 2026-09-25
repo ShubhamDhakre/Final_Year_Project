@@ -12,12 +12,14 @@ const ApiError = require('./ApiError');
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models';
 const getApiKey = () => process.env.GEMINI_API_KEY;
 
-// Cascade model list in case of temporary 503 / high demand spikes
+// Cascade model list in case of temporary 503 / high demand spikes / quota limits
 const MODEL_CASCADE = [
-  process.env.GEMINI_MODEL || 'gemini-3.5-flash',
-  'gemini-3.8-flash',
-  'gemini-3.1-flash-lite',
+  process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite',
   'gemini-3.5-flash-lite',
+  'gemini-flash-lite-latest',
+  'gemini-flash-latest',
+  'gemini-3.5-flash',
+  'gemini-3.8-flash',
 ];
 
 /**
@@ -66,9 +68,9 @@ const callGeminiAPI = async (prompt, systemInstruction = null, options = {}) => 
         const errorData = await response.json().catch(() => ({}));
         const status = response.status;
 
-        // If 503 high demand or 429 quota, try next model in cascade
-        if (status === 503 || status === 429) {
-          lastError = new ApiError(status, errorData.error?.message || 'High demand');
+        // If 503 high demand, 429 quota, 404 model not found, or 500, try next model in cascade
+        if (status === 503 || status === 429 || status === 404 || status === 500) {
+          lastError = new ApiError(status, errorData.error?.message || 'Model temporarily unavailable');
           continue;
         }
 
@@ -76,10 +78,11 @@ const callGeminiAPI = async (prompt, systemInstruction = null, options = {}) => 
           throw new ApiError(500, 'Invalid API key or access denied');
         }
 
-        throw new ApiError(
+        lastError = new ApiError(
           502,
           `AI service error: ${errorData.error?.message || response.statusText}`
         );
+        continue;
       }
 
       const data = await response.json();

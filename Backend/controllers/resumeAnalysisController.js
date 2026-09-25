@@ -4,7 +4,7 @@ const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const Resume = require('../models/Resume');
 const ResumeAnalysis = require('../models/ResumeAnalysis');
-const { callGeminiAPI } = require('../utils/geminiUtils');
+const { callGeminiAPI, safeParseJSON } = require('../utils/geminiUtils');
 
 // ─── Multer Config ─────────────────────────────────────────────────────────────
 const storage = multer.memoryStorage();
@@ -861,40 +861,37 @@ Audit this resume specifically for ${targetRole} and return the JSON object.`;
     });
 
     if (rawResponse) {
-      let cleaned = rawResponse.trim();
-      if (cleaned.startsWith('```')) {
-        cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
+      const parsed = safeParseJSON(rawResponse);
+
+      if (parsed) {
+        // Apply dynamic scores from Gemini
+        if (typeof parsed.overall_score === 'number') baseline.overall_score = parsed.overall_score;
+        if (typeof parsed.role_match_score === 'number') baseline.role_match_score = parsed.role_match_score;
+        if (typeof parsed.ats_score === 'number') baseline.ats_score = parsed.ats_score;
+        if (parsed.role_level) baseline.role_level = parsed.role_level;
+
+        if (parsed.multi_scores) {
+          if (typeof parsed.multi_scores.role_relevance === 'number') baseline.multi_scores.role_relevance = parsed.multi_scores.role_relevance;
+          if (typeof parsed.multi_scores.ats_formatting === 'number') baseline.multi_scores.ats_formatting = parsed.multi_scores.ats_formatting;
+          if (typeof parsed.multi_scores.impact_quantification === 'number') baseline.multi_scores.impact_quantification = parsed.multi_scores.impact_quantification;
+          if (typeof parsed.multi_scores.power_language === 'number') baseline.multi_scores.power_language = parsed.multi_scores.power_language;
+          if (typeof parsed.multi_scores.brevity_structure === 'number') baseline.multi_scores.brevity_structure = parsed.multi_scores.brevity_structure;
+        }
+
+        if (parsed.first_impression) {
+          if (parsed.first_impression.verdict) baseline.first_impression.verdict = parsed.first_impression.verdict;
+          if (parsed.first_impression.sentiment_badge) baseline.first_impression.sentiment_badge = parsed.first_impression.sentiment_badge;
+          if (parsed.first_impression.takeaways?.length) baseline.first_impression.takeaways = parsed.first_impression.takeaways;
+        }
+
+        if (parsed.summary) baseline.summary = parsed.summary;
+        if (parsed.strengths?.length) baseline.role_readiness.strengths = parsed.strengths;
+        if (parsed.weaknesses?.length) baseline.role_readiness.weaknesses = parsed.weaknesses;
+        if (parsed.suggestions?.length) baseline.suggestions = parsed.suggestions;
+        if (parsed.bullet_improvements?.length) baseline.bullet_improvements = parsed.bullet_improvements;
+        if (parsed.elevator_pitch) baseline.recruiter_outreach.elevator_pitch = parsed.elevator_pitch;
+        if (parsed.interview_questions?.length) baseline.interview_questions = parsed.interview_questions;
       }
-
-      const parsed = JSON.parse(cleaned);
-
-      // Apply dynamic scores from Gemini
-      if (typeof parsed.overall_score === 'number') baseline.overall_score = parsed.overall_score;
-      if (typeof parsed.role_match_score === 'number') baseline.role_match_score = parsed.role_match_score;
-      if (typeof parsed.ats_score === 'number') baseline.ats_score = parsed.ats_score;
-      if (parsed.role_level) baseline.role_level = parsed.role_level;
-
-      if (parsed.multi_scores) {
-        if (typeof parsed.multi_scores.role_relevance === 'number') baseline.multi_scores.role_relevance = parsed.multi_scores.role_relevance;
-        if (typeof parsed.multi_scores.ats_formatting === 'number') baseline.multi_scores.ats_formatting = parsed.multi_scores.ats_formatting;
-        if (typeof parsed.multi_scores.impact_quantification === 'number') baseline.multi_scores.impact_quantification = parsed.multi_scores.impact_quantification;
-        if (typeof parsed.multi_scores.power_language === 'number') baseline.multi_scores.power_language = parsed.multi_scores.power_language;
-        if (typeof parsed.multi_scores.brevity_structure === 'number') baseline.multi_scores.brevity_structure = parsed.multi_scores.brevity_structure;
-      }
-
-      if (parsed.first_impression) {
-        if (parsed.first_impression.verdict) baseline.first_impression.verdict = parsed.first_impression.verdict;
-        if (parsed.first_impression.sentiment_badge) baseline.first_impression.sentiment_badge = parsed.first_impression.sentiment_badge;
-        if (parsed.first_impression.takeaways?.length) baseline.first_impression.takeaways = parsed.first_impression.takeaways;
-      }
-
-      if (parsed.summary) baseline.summary = parsed.summary;
-      if (parsed.strengths?.length) baseline.role_readiness.strengths = parsed.strengths;
-      if (parsed.weaknesses?.length) baseline.role_readiness.weaknesses = parsed.weaknesses;
-      if (parsed.suggestions?.length) baseline.suggestions = parsed.suggestions;
-      if (parsed.bullet_improvements?.length) baseline.bullet_improvements = parsed.bullet_improvements;
-      if (parsed.elevator_pitch) baseline.recruiter_outreach.elevator_pitch = parsed.elevator_pitch;
-      if (parsed.interview_questions?.length) baseline.interview_questions = parsed.interview_questions;
     }
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') {
@@ -923,8 +920,13 @@ const analyzeResume = [
     let resumeId = null;
 
     if (req.file) {
-      const pdfData = await pdfParse(req.file.buffer);
-      resumeText = pdfData.text || '';
+      let pdfData;
+      try {
+        pdfData = await pdfParse(req.file.buffer);
+      } catch (parseErr) {
+        throw new ApiError(400, 'Unable to parse this PDF file. Ensure it is a valid, uncorrupted PDF document.');
+      }
+      resumeText = pdfData?.text || '';
 
       if (!resumeText.trim()) {
         throw new ApiError(400, 'Could not extract text from the PDF. Ensure it is not scanned or password-protected.');

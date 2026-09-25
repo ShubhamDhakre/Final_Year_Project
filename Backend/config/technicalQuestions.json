@@ -1,0 +1,71 @@
+[
+  { "id": "tech-js-easy-1",   "skill": "javascript", "difficulty": "easy", "question": "What is the difference between let, const, and var in JavaScript?" },
+  { "id": "tech-js-easy-2",   "skill": "javascript", "difficulty": "easy", "question": "What is a closure in JavaScript? Give a simple example." },
+  { "id": "tech-js-easy-3",   "skill": "javascript", "difficulty": "easy", "question": "What is the difference between == and === in JavaScript?" },
+  { "id": "tech-js-easy-4",   "skill": "javascript", "difficulty": "easy", "question": "What are arrow functions and how do they differ from regular functions?" },
+  { "id": "tech-js-easy-5",   "skill": "javascript", "difficulty": "easy", "question": "What is a Promise in JavaScript and why is it used?" },
+  { "id": "tech-js-hard-1",   "skill": "javascript", "difficulty": "hard", "question": "Explain the event loop and microtask queue in JavaScript." },
+  { "id": "tech-js-hard-2",   "skill": "javascript", "difficulty": "hard", "question": "What is prototypal inheritance in JavaScript and how does it work?" },
+  { "id": "tech-js-hard-3",   "skill": "javascript", "difficulty": "hard", "question": "Explain async/await and how it handles errors compared to Promise.catch()." },
+  { "id": "tech-js-hard-4",   "skill": "javascript", "difficulty": "hard", "question": "What are generators and iterators in JavaScript? When would you use them?" },
+  { "id": "tech-js-hard-5",   "skill": "javascript", "difficulty": "hard", "question": "How does JavaScript's memory management and garbage collection work?" },
+
+  { "id": "tech-react-easy-1","skill": "react",      "difficulty": "easy", "question": "What are React components and what are props?" },
+  { "id": "tech-react-easy-2","skill": "react",      "difficulty": "easy", "question": "What is the difference between state and props in React?" },
+  { "id": "tech-react-easy-3","skill": "react",      "difficulty": "easy", "question": "What is JSX and why do we use it in React?" },
+  { "id": "tech-react-easy-4","skill": "react",      "difficulty": "easy", "question": "What is the virtual DOM and how does React use it?" },
+  { "id": "tech-react-easy-5","skill": "react",      "difficulty": "easy", "question": "How do you handle events in React? Give an example." },
+  { "id": "tech-react-hard-1","skill": "react",      "difficulty": "hard", "question": "What are React hooks and why were they introduced? Name the most commonly used ones." },
+  { "id": "tech-react-hard-2","skill": "react",      "difficulty": "hard", "question": "Explain the useEffect hook. When does it run and how do you control re-runs?" },
+  { "id": "tech-react-hard-3","skill": "react",      "difficulty": "hard", "question": "What is React Context API and when should you use it over prop drilling?" },
+  { "id": "tech-react-hard-4","skill": "react",      "difficulty": "hard", "question": "What is React.memo and useMemo? How do they help performance?" },
+  { "id": "tech-react-hard-5","skill": "react",      "difficulty": "hard", "question": "Explain the React component lifecycle and its equivalent hooks." },
+
+  { "id": "tech-node-easy-1", "skill": "node",       "difficulty": "easy", "question": "What is Node.js and where is it commonly used?" },
+  { "id": "tech-node-easy-2", "skill": "node",       "difficulty": "easy", "question": "What is npm and what is it used for?" },
+  { "id": "tech-node-easy-3", "skill": "node",       "difficulty": "easy", "question": "What is the difference between synchronous and asynchronous code in Node.js?" },
+  { "id": "tech-node-hard-1", "skill": "node",       "difficulty": "hard", "question": "Explain the concept of middleware in Express.js." },
+  { "id": "tech-node-hard-2", "skill": "node",       "difficulty": "hard", "question": "How does Node.js handle concurrency without multiple threads?" },
+  { "id": "tech-node-hard-3", "skill": "node",       "difficulty": "hard", "question": "What are streams in Node.js and when would you use them over regular file reads?" },
+
+  { "id": "tech-python-easy-1","skill": "python",    "difficulty": "easy", "question": "What are lists, tuples, and dictionaries in Python? How are they different?" },
+  { "id": "tech-python-easy-2","skill": "python",    "difficulty": "easy", "question": "What is the difference between a list and a generator in Python?" },
+  { "id": "tech-python-easy-3","skill": "python",    "difficulty": "easy", "question": "What are Python decorators and why are they useful?" },
+  { "id": "tech-python-hard-1","skill": "python",    "difficulty": "hard", "question": "Explain Python's GIL (Global Interpreter Lock) and its implications for multithreading." },
+  { "id": "tech-python-hard-2","skill": "python",    "difficulty": "hard", "question": "What is the difference between multiprocessing and multithreading in Python?" },
+
+  { "id": "tech-mongodb-easy-1","skill": "mongodb",  "difficulty": "easy", "question": "What is MongoDB and how is it different from a relational database like MySQL?" },
+  { "id": "tech-mongodb-easy-2","skill": "mongodb",  "difficulty": "easy", "question": "What is a document in MongoDB? How is it structured?" },
+  { "id": "tech-mongodb-hard-1","skill": "mongodb",  "difficulty": "hard", "question": "What is aggregation in MongoDB and when would you use the aggregation pipeline?" },
+  { "id": "tech-mongodb-hard-2","skill": "mongodb",  "difficulty": "hard", "question": "How does indexing work in MongoDB and why is it important for performance?" },
+
+  { "id": "tech-sql-easy-1",  "skill": "sql",        "difficulty": "easy", "question": "What is the difference between INNER JOIN and LEFT JOIN in SQL?" },
+  { "id": "tech-sql-easy-2",  "skill": "sql",        "difficulty": "easy", "question": "What are primary keys and foreign keys in a relational database?" },
+  { "id": "tech-sql-hard-1",  "skill": "sql",        "difficulty": "hard", "question": "Explain database normalization. What are 1NF, 2NF, and 3NF?" },
+  { "id": "tech-sql-hard-2",  "skill": "sql",        "difficulty": "hard", "question": "What is a database index and how does it affect query performance?" },
+
+  { "id": "tech-git-easy-1",  "skill": "git",        "difficulty": "easy", "question": "What is Git and why do we use version control?" },
+  { "id": "tech-git-easy-2",  "skill": "git",        "difficulty": "easy", "question": "What is the difference between git merge and git rebase?" },
+  { "id": "tech-git-hard-1",  "skill": "git",        "difficulty": "hard", "question": "What is a Git conflict and how do you resolve it?" },
+
+  { "id": "tech-dsa-easy-1",  "skill": "dsa",        "difficulty": "easy", "question": "What is Big O notation and why is it used?" },
+  { "id": "tech-dsa-easy-2",  "skill": "dsa",        "difficulty": "easy", "question": "What is the difference between a stack and a queue?" },
+  { "id": "tech-dsa-easy-3",  "skill": "dsa",        "difficulty": "easy", "question": "What is a linked list and how is it different from an array?" },
+  { "id": "tech-dsa-hard-1",  "skill": "dsa",        "difficulty": "hard", "question": "Explain binary search. What is its time complexity and when can it be applied?" },
+  { "id": "tech-dsa-hard-2",  "skill": "dsa",        "difficulty": "hard", "question": "What is dynamic programming? Give an example of a problem solved with it." },
+  { "id": "tech-dsa-hard-3",  "skill": "dsa",        "difficulty": "hard", "question": "Explain the difference between BFS and DFS graph traversal." },
+
+  { "id": "tech-java-easy-1", "skill": "java",       "difficulty": "easy", "question": "What is the difference between an interface and an abstract class in Java?" },
+  { "id": "tech-java-easy-2", "skill": "java",       "difficulty": "easy", "question": "What are the four pillars of Object-Oriented Programming? Explain each briefly." },
+  { "id": "tech-java-hard-1", "skill": "java",       "difficulty": "hard", "question": "What is the difference between HashMap and Hashtable in Java?" },
+  { "id": "tech-java-hard-2", "skill": "java",       "difficulty": "hard", "question": "Explain Java multithreading and the synchronized keyword." },
+
+  { "id": "tech-css-easy-1",  "skill": "css",        "difficulty": "easy", "question": "What is the CSS box model? Explain its components." },
+  { "id": "tech-css-easy-2",  "skill": "css",        "difficulty": "easy", "question": "What is the difference between flexbox and CSS grid?" },
+  { "id": "tech-css-hard-1",  "skill": "css",        "difficulty": "hard", "question": "What is CSS specificity and how does it determine which styles are applied?" },
+
+  { "id": "tech-general-easy-1","skill": "general",  "difficulty": "easy", "question": "What is the difference between HTTP and HTTPS?" },
+  { "id": "tech-general-easy-2","skill": "general",  "difficulty": "easy", "question": "What is an API? How does a REST API work?" },
+  { "id": "tech-general-hard-1","skill": "general",  "difficulty": "hard", "question": "What is the difference between authentication and authorization?" },
+  { "id": "tech-general-hard-2","skill": "general",  "difficulty": "hard", "question": "Explain what happens when you type a URL in the browser and press Enter." }
+]

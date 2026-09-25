@@ -1,0 +1,38 @@
+[
+  {
+    "id": "roadmap-sde",
+    "question": "Roadmap for SDE",
+    "answer": "To become an SDE, focus on data structures and algorithms, core CS fundamentals (OS, DBMS, networks), one programming language (Java, C++, or Python), system design basics, and real projects or internships. Practice coding problems daily and mock interviews regularly."
+  },
+  {
+    "id": "how-to-use",
+    "question": "How to use this website?",
+    "answer": "First, create an account and log in. Then use HR mode to practice behavioral questions and Technical mode with your resume to get skill-based questions. After each answer, review the AI feedback, improved answer, and confidence score. Use the dashboard to track your progress over time."
+  },
+  {
+    "id": "hr-mode",
+    "question": "How does HR mode work?",
+    "answer": "In HR mode, you select a difficulty level and receive a typical HR interview question. You answer verbally, the system converts your speech to text, and the AI coach provides feedback and an improved sample answer. It also calculates metrics like confidence score, filler words, and speech speed."
+  },
+  {
+    "id": "technical-mode",
+    "question": "How does Technical mode work?",
+    "answer": "In Technical mode, you upload your resume. The system extracts your skills and asks technical questions relevant to your profile. You answer them verbally, and the AI provides structured feedback and improved answers similar to HR mode."
+  },
+  {
+    "id": "confidence-score",
+    "question": "How to improve confidence score?",
+    "answer": "To improve your confidence score, reduce filler words like 'um' and 'uh', maintain a clear and steady speaking pace (around 120–160 words per minute), and give complete answers with clear structure: introduction, explanation, and conclusion. Practice the same question multiple times to see improvement."
+  },
+  {
+    "id": "tips-technical",
+    "question": "Tips to crack technical interviews",
+    "answer": "Revise core CS subjects, practice coding problems regularly, understand time and space complexity, and be able to explain your projects clearly. During the interview, think aloud, clarify requirements, and communicate your approach step by step."
+  },
+  {
+    "id": "why-platform",
+    "question": "Why is this platform important for placements?",
+    "answer": "This platform helps you practice realistic interviews, receive AI-driven feedback, and track your improvement over time. It builds your confidence before real campus or off-campus placements by simulating both HR and technical interview scenarios."
+  }
+]
+

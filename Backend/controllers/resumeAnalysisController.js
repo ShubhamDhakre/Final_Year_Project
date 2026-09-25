@@ -373,6 +373,24 @@ const BUZZWORDS = [
   'go-getter', 'results-driven', 'synergy', 'dynamic'
 ];
 
+// ─── Regex Helper for Skills & Keywords ───────────────────────────────────────
+const escapeRegex = (string) => {
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+};
+
+const createTermRegex = (term, flags = 'i') => {
+  const trimmed = term.trim();
+  const escaped = escapeRegex(trimmed);
+  const startsWithWordChar = /^\w/.test(trimmed);
+  const prefix = startsWithWordChar ? '(?<![a-zA-Z0-9])' : '(?<![a-zA-Z0-9])';
+  const endsWithWordChar = /\w$/.test(trimmed);
+  const lastChar = trimmed[trimmed.length - 1];
+  const escapedLastChar = escapeRegex(lastChar);
+  // Avoid matching 'c' in 'c++' or 'c#' by excluding + and # from what follows word characters
+  const suffix = endsWithWordChar ? '(?![a-zA-Z0-9+#])' : `(?![a-zA-Z0-9${escapedLastChar}])`;
+  return new RegExp(`${prefix}${escaped}${suffix}`, flags);
+};
+
 // ─── Deep Keyword Scanner with Aliases ────────────────────────────────────────
 const scanKeywords = (text, roleDef) => {
   const lower = text.toLowerCase();
@@ -381,11 +399,16 @@ const scanKeywords = (text, roleDef) => {
     const aliases = item.aliases || [item.keyword.toLowerCase()];
 
     for (const alias of aliases) {
-      const escaped = alias.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
-      const matches = lower.match(regex);
-      if (matches) {
-        count += matches.length;
+      try {
+        const regex = createTermRegex(alias, 'gi');
+        const matches = lower.match(regex);
+        if (matches) {
+          count += matches.length;
+        }
+      } catch (e) {
+        if (lower.includes(alias.toLowerCase())) {
+          count += 1;
+        }
       }
     }
 
@@ -512,12 +535,19 @@ const EXTENDED_SKILLS_LIST = [
 ];
 
 const extractAllSkills = (text) => {
+  if (!text) return [];
   const lower = text.toLowerCase();
   const matched = [];
   EXTENDED_SKILLS_LIST.forEach((s) => {
-    const regex = new RegExp(`\\b${s.replace('.', '\\.')}\\b`, 'i');
-    if (regex.test(lower)) {
-      matched.push(s);
+    try {
+      const regex = createTermRegex(s, 'i');
+      if (regex.test(lower)) {
+        matched.push(s);
+      }
+    } catch (e) {
+      if (lower.includes(s.toLowerCase())) {
+        matched.push(s);
+      }
     }
   });
 
@@ -535,7 +565,21 @@ const extractAllSkills = (text) => {
     'restful api': 'REST APIs', 'rest api': 'REST APIs',
     'dsa': 'Data Structures & Algorithms',
     'data structures': 'Data Structures & Algorithms',
-    'oops': 'Object-Oriented Programming (OOP)'
+    'oops': 'Object-Oriented Programming (OOP)',
+    'c++': 'C++',
+    'c#': 'C#',
+    '.net': '.NET',
+    'ci/cd': 'CI/CD',
+    'aws': 'AWS',
+    'gcp': 'GCP',
+    'llm': 'LLM',
+    'nlp': 'NLP',
+    'sql': 'SQL',
+    'mysql': 'MySQL',
+    'mongodb': 'MongoDB',
+    'graphql': 'GraphQL',
+    'ai': 'AI',
+    'ui/ux': 'UI/UX'
   };
 
   const formatted = matched.map((s) => canonicalMap[s] || (s.charAt(0).toUpperCase() + s.slice(1)));
@@ -561,7 +605,13 @@ const generateDeepAnalysis = (resumeText, targetRole, detectedSkills) => {
   const bonusSkills = detectedSkills.filter((s) => !matchedSkills.includes(s));
 
   // 2. Action Verbs & Language Audit
-  const strongVerbsFound = POWER_VERBS.filter((v) => new RegExp(`\\b${v}\\b`, 'i').test(lowerText));
+  const strongVerbsFound = POWER_VERBS.filter((v) => {
+    try {
+      return createTermRegex(v, 'i').test(lowerText);
+    } catch (e) {
+      return lowerText.includes(v.toLowerCase());
+    }
+  });
   const weakVerbsFound = WEAK_VERB_MAP.filter((w) => lowerText.includes(w.weak));
   const buzzwordsFound = BUZZWORDS.filter((b) => lowerText.includes(b));
 
